@@ -233,6 +233,10 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
     
     return grid_search.best_estimator_
 
+# Paso 5.
+# Guarde el modelo (comprimido con gzip) como "files/models/model.pkl.gz".
+# Recuerde que es posible guardar el modelo comprimido usanzo la libreria gzip.
+
 
 def save_model(model, filepath):
     """
@@ -243,6 +247,17 @@ def save_model(model, filepath):
     with gzip.open(filepath, 'wb') as f:
         pickle.dump(model, f)
 
+# Paso 6.
+# Calcule las metricas de precision, precision balanceada, recall,
+# y f1-score para los conjuntos de entrenamiento y prueba.
+# Guardelas en el archivo files/output/metrics.json. Cada fila
+# del archivo es un diccionario con las metricas de un modelo.
+# Este diccionario tiene un campo para indicar si es el conjunto
+# de entrenamiento o prueba. Por ejemplo:
+#
+# {'dataset': 'train', 'precision': 0.8, 'balanced_accuracy': 0.7, 'recall': 0.9, 'f1_score': 0.85}
+# {'dataset': 'test', 'precision': 0.7, 'balanced_accuracy': 0.6, 'recall': 0.8, 'f1_score': 0.75}
+#
 
 def calculate_metrics(model, x_train, y_train, x_test, y_test):
     """
@@ -272,6 +287,15 @@ def calculate_metrics(model, x_train, y_train, x_test, y_test):
     
     return train_metrics, test_metrics, y_train_pred, y_test_pred
 
+
+# Paso 7.
+# Calcule las matrices de confusion para los conjuntos de entrenamiento y
+# prueba. Guardelas en el archivo files/output/metrics.json. Cada fila
+# del archivo es un diccionario con las metricas de un modelo.
+# de entrenamiento o prueba. Por ejemplo:
+#
+# {'type': 'cm_matrix', 'dataset': 'train', 'true_0': {"predicted_0": 15562, "predicte_1": 666}, 'true_1': {"predicted_0": 3333, "predicted_1": 1444}}
+# {'type': 'cm_matrix', 'dataset': 'test', 'true_0': {"predicted_0": 15562, "predicte_1": 650}, 'true_1': {"predicted_0": 2490, "predicted_1": 1420}}
 
 def calculate_confusion_matrices(y_train, y_train_pred, y_test, y_test_pred):
     """
