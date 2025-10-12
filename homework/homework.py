@@ -244,7 +244,7 @@ def save_model(model, filepath):
     """
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
     
-    with gzip.open(filepath, 'wb') as f:
+    with gzip.open(filepath, 'wb') as f:  # type: ignore
         pickle.dump(model, f)
 
 # Paso 6.
