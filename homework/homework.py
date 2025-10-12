@@ -205,20 +205,21 @@ def create_pipeline():
 # Use 10 splits para la validación cruzada. Use la función de precision
 # balanceada para medir la precisión del modelo.
 #
-
 def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     Paso 4: Optimización de hiperparámetros con validación cruzada
     """
     # Definir parámetros para optimizar
+    # ----- REEMPLAZA LA ANTIGUA GRID POR ESTA -----
     param_grid = {
-        'classifier__n_estimators': [50, 100, 200],
-        'classifier__max_depth': [10, 20, None],
-        'classifier__min_samples_split': [2, 5, 10],
-        'classifier__min_samples_leaf': [1, 2, 4]
+        'classifier__n_estimators': [200, 300],
+        'classifier__max_depth': [10, 20],
+        'classifier__min_samples_split': [5, 10],
+        'classifier__min_samples_leaf': [2, 4],
+        'classifier__max_features': ['sqrt', 'log2']
     }
     
-    # Configurar GridSearchCV con precisión balanceada
+    # El resto de la función no cambia...
     grid_search = GridSearchCV(
         pipeline,
         param_grid,
