@@ -173,25 +173,38 @@ def split_features_target(train_df, test_df):
 #   one-hot-encoding.
 # - Ajusta un modelo de bosques aleatorios (rando forest).
 #
+# En homework.py
+
+from sklearn.preprocessing import StandardScaler
 
 def create_pipeline():
     """
-    Paso 3: Crear pipeline con one-hot encoding y Random Forest
+    Paso 3: Crear pipeline con preprocesamiento y Random Forest
     """
-    # Identificar variables categóricas
+    # Identificar variables categóricas y numéricas
     categorical_features = ['SEX', 'EDUCATION', 'MARRIAGE', 'PAY_0', 'PAY_2', 
-                           'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
+                            'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
     
-    # Crear preprocessor para variables categóricas
-    # handle_unknown='ignore' para manejar categorías no vistas durante el entrenamiento
+    # Todas las demás columnas se asumirán como numéricas
+    
+    # Crear transformador para variables categóricas
+    categorical_transformer = OneHotEncoder(drop='first', 
+                                            sparse_output=False, 
+                                            handle_unknown='ignore')
+    
+    # Crear transformador para variables numéricas
+    numeric_transformer = StandardScaler()
+
+    # Crear el preprocesador que aplica diferentes transformaciones a diferentes columnas
     preprocessor = ColumnTransformer(
         transformers=[
-            ('cat', OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore'), categorical_features)
+            ('num', numeric_transformer, ['LIMIT_BAL', 'AGE', 'BILL_AMT1', 'BILL_AMT2', 'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1', 'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']),
+            ('cat', categorical_transformer, categorical_features)
         ],
-        remainder='passthrough'
+        remainder='passthrough' # Dejar las columnas restantes como están (si las hubiera)
     )
     
-    # Crear pipeline
+    # Crear el pipeline final
     pipeline = Pipeline([
         ('preprocessor', preprocessor),
         ('classifier', RandomForestClassifier(random_state=42))
@@ -206,21 +219,22 @@ def create_pipeline():
 # balanceada para medir la precisión del modelo.
 #
 # En la función optimize_hyperparameters
+# En homework.py
 
 def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     Paso 4: Optimización de hiperparámetros con validación cruzada
     """
-    # ----- REEMPLAZA LA ANTIGUA GRID POR ESTA -----
+    # Grilla de parámetros final para buscar el mejor modelo
     param_grid = {
-        'classifier__n_estimators': [200, 300],
+        'classifier__n_estimators': [300],
         'classifier__max_depth': [10, None],
         'classifier__min_samples_split': [5, 10],
-        'classifier__min_samples_leaf': [2, 4],
-        'classifier__class_weight': ['balanced', 'balanced_subsample']
+        'classifier__min_samples_leaf': [2],
+        'classifier__class_weight': ['balanced_subsample'],
+        'classifier__criterion': ['entropy']
     }
     
-    # El resto de la función no cambia...
     grid_search = GridSearchCV(
         pipeline,
         param_grid,
@@ -230,7 +244,6 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
         verbose=1
     )
     
-    # Entrenar el modelo
     grid_search.fit(x_train, y_train)
     
     return grid_search
