@@ -205,18 +205,19 @@ def create_pipeline():
 # Use 10 splits para la validación cruzada. Use la función de precision
 # balanceada para medir la precisión del modelo.
 #
+# En la función optimize_hyperparameters
+
 def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     Paso 4: Optimización de hiperparámetros con validación cruzada
     """
-    # Definir parámetros para optimizar
     # ----- REEMPLAZA LA ANTIGUA GRID POR ESTA -----
     param_grid = {
         'classifier__n_estimators': [200, 300],
-        'classifier__max_depth': [10, 20],
+        'classifier__max_depth': [10, None],
         'classifier__min_samples_split': [5, 10],
         'classifier__min_samples_leaf': [2, 4],
-        'classifier__max_features': ['sqrt', 'log2']
+        'classifier__class_weight': ['balanced', 'balanced_subsample']
     }
     
     # El resto de la función no cambia...
@@ -233,7 +234,6 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
     grid_search.fit(x_train, y_train)
     
     return grid_search
-
 # Paso 5.
 # Guarde el modelo (comprimido con gzip) como "files/models/model.pkl.gz".
 # Recuerde que es posible guardar el modelo comprimido usanzo la libreria gzip.
