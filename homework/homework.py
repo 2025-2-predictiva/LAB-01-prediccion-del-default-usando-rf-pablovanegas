@@ -220,19 +220,21 @@ def create_pipeline():
 #
 # En la función optimize_hyperparameters
 # En homework.py
+# En homework.py, reemplaza esta función completa:
 
 def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     Paso 4: Optimización de hiperparámetros con validación cruzada
     """
-    # Grilla de parámetros final para buscar el mejor modelo
+    # Grilla de búsqueda final y definitiva para maximizar el rendimiento
     param_grid = {
-        'classifier__n_estimators': [300],
-        'classifier__max_depth': [10, None],
-        'classifier__min_samples_split': [5, 10],
-        'classifier__min_samples_leaf': [2],
+        'classifier__n_estimators': [500],
+        'classifier__max_depth': [None],
+        'classifier__min_samples_split': [2],
+        'classifier__min_samples_leaf': [1],
         'classifier__class_weight': ['balanced_subsample'],
-        'classifier__criterion': ['entropy']
+        'classifier__criterion': ['entropy'],
+        'classifier__max_features': ['sqrt']
     }
     
     grid_search = GridSearchCV(
