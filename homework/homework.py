@@ -228,10 +228,10 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     # Grilla de búsqueda balanceada para evitar el sobreajuste
     param_grid = {
-        'classifier__n_estimators': [300],
-        'classifier__max_depth': [10],
-        'classifier__min_samples_split': [10],
-        'classifier__min_samples_leaf': [4],
+        'classifier__n_estimators': [100,200,300,400],
+        'classifier__max_depth': [5,10,15,20,None],
+        'classifier__min_samples_split': [5,10],
+        'classifier__min_samples_leaf': [1,2,4],
         'classifier__class_weight': ['balanced_subsample'],
         'classifier__max_features': ['sqrt']
     }
