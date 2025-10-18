@@ -226,14 +226,13 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
     """
     Paso 4: Optimización de hiperparámetros con validación cruzada
     """
-    # Grilla de búsqueda final y definitiva para maximizar el rendimiento
+    # Grilla de búsqueda balanceada para evitar el sobreajuste
     param_grid = {
-        'classifier__n_estimators': [500],
-        'classifier__max_depth': [None],
-        'classifier__min_samples_split': [2],
-        'classifier__min_samples_leaf': [1],
+        'classifier__n_estimators': [300],
+        'classifier__max_depth': [10],
+        'classifier__min_samples_split': [10],
+        'classifier__min_samples_leaf': [4],
         'classifier__class_weight': ['balanced_subsample'],
-        'classifier__criterion': ['entropy'],
         'classifier__max_features': ['sqrt']
     }
     
@@ -249,6 +248,7 @@ def optimize_hyperparameters(pipeline, x_train, y_train):
     grid_search.fit(x_train, y_train)
     
     return grid_search
+
 # Paso 5.
 # Guarde el modelo (comprimido con gzip) como "files/models/model.pkl.gz".
 # Recuerde que es posible guardar el modelo comprimido usanzo la libreria gzip.
