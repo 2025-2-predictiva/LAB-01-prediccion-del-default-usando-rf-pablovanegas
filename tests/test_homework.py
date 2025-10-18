@@ -15,8 +15,8 @@ MODEL_COMPONENTS = [
     "RandomForestClassifier",
 ]
 SCORES = [
-    0.70,
-    0.60,
+    0.710,
+    0.610,
 ]
 METRICS = [
     {
