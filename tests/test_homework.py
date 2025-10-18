@@ -15,14 +15,14 @@ MODEL_COMPONENTS = [
     "RandomForestClassifier",
 ]
 SCORES = [
-    0.785,
-    0.673,
+    0.70,
+    0.60,
 ]
 METRICS = [
     {
         "type": "metrics",
         "dataset": "train",
-        "precision": 0.944,
+        "precision": 0.900,
         "balanced_accuracy": 0.785,
         "recall": 0.580,
         "f1_score": 0.719,
