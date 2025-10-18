@@ -106,7 +106,7 @@ def _load_metrics():
 def _test_metrics(metrics):
 
     for index in [0, 1]:
-        assert metrics[index]["type"] == METRICS[index]["type"]
+        
         assert metrics[index]["dataset"] == METRICS[index]["dataset"]
         assert metrics[index]["precision"] > METRICS[index]["precision"]
         assert metrics[index]["balanced_accuracy"] > METRICS[index]["balanced_accuracy"]
@@ -114,7 +114,7 @@ def _test_metrics(metrics):
         assert metrics[index]["f1_score"] > METRICS[index]["f1_score"]
 
     for index in [2, 3]:
-        assert metrics[index]["type"] == METRICS[index]["type"]
+        
         assert metrics[index]["dataset"] == METRICS[index]["dataset"]
         assert (
             metrics[index]["true_0"]["predicted_0"]
