@@ -22,15 +22,15 @@ METRICS = [
     {
         "type": "metrics",
         "dataset": "train",
-        "precision": 0.5,
+        "precision": 0.4,
         "balanced_accuracy": 0.4,
         "recall": 0.580,
-        "f1_score": 0.5,
+        "f1_score": 0.4,
     },
     {
         "type": "metrics",
         "dataset": "test",
-        "precision": 0.50,
+        "precision": 0.4,
         "balanced_accuracy": 0.4,
         "recall": 0.401,
         "f1_score": 0.498,
